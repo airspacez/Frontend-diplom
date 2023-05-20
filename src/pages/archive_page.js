@@ -440,7 +440,7 @@ export default function ArhivePage() {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}  className={styles.dialog_button}>
-                        Отмена
+                        Отменаfdgjkl
                     </Button>
                     <Button onClick={ async ()=> { console.log(gameDateSelectedValue); setUserLastGames(await DataAccessService.getarchiveGamesByFilter(getDate(gameDateSelectedValue), getMonth(gameDateSelectedValue)+1, getYear(gameDateSelectedValue), gamePlaceSelectedValue,gameResulteSelectedValue, gameTypeSelectedValue, 0, countPerPage)); setPage(1); handleClose(); } }  className={styles.dialog_button}>
                         Ок
