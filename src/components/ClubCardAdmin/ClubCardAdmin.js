@@ -1,36 +1,27 @@
 
-import { styled } from '@material-ui/styles';
 import { useNavigate } from "react-router-dom";
-import { useState } from 'react';
 import Hidden from "@material-ui/core/Hidden"
 import Button from "@material-ui/core/Button"
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from '@material-ui/core/CardActions';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import IconButton from '@material-ui/core/IconButton';
-
 import { makeStyles } from '@material-ui/core/styles';
-import { set } from 'date-fns';
 
 const useStyles = makeStyles((theme) => ({
     root:
-    {   
-        width:"100%",
-        marginBottom:"24px",
+    {
+        marginBottom: "24px",
         background: "#EBE5D7",
         '&.MuiCard-root':
         {
-
-            height:"fit-content",
+            height: "fit-content",
 
         },
         [theme.breakpoints.down('sm')]: {
-            marginBottom:"5px",
-            
+            marginBottom: "5px",
+
         },
-       
+
     },
     profile_container:
     {
@@ -47,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.down('xs')]: {
 
             flexDirection: "column",
-            
+
         },
         [theme.breakpoints.down('sm')]: {
             padding: "0px",
@@ -62,19 +53,19 @@ const useStyles = makeStyles((theme) => ({
         height: "256px",
         objectFit: "cover",
         boxShadow: "0px 1px 3px 0px rgba(0, 0, 0, 0.3)",
-        overflow:"hidden",
+        overflow: "hidden",
         [theme.breakpoints.down('sm')]: {
             margin: "0 auto",
             marginBottom: "20px",
             width: "192px",
             height: "256px",
-            
+
 
         },
 
         [theme.breakpoints.down('xs')]: {
-            
-           
+
+
             height: "100%",
         },
 
@@ -152,7 +143,7 @@ const useStyles = makeStyles((theme) => ({
     data:
     {
         display: "inline-block"
-       
+
     },
     email:
     {
@@ -249,56 +240,54 @@ const useStyles = makeStyles((theme) => ({
         boxSizing: "border-box",
         display: "flex",
         flexDirection: "column",
-        
+
     },
     game_item:
     {
-
         display: "flex",
-        width:"100%",
         justifyContent: "space-between",
         fontFamily: "'Roboto', sans-serif",
         textTransform: "uppercase",
-        
+
         [theme.breakpoints.down('xs')]: {
 
-            flexDirection:"column",
-            
+            flexDirection: "column",
+
         },
     },
     game_data:
     {
-        marginRight:"12px",
+        marginRight: "12px",
         fontSize: "14pt",
         fontWeight: "600",
         height: "fit-content",
         textAlign: "left",
-        
-            
-        
-        
-        
+
+
+
+
+
     },
     game_result_container:
     {
         display: "flex",
-        
+
         justifyContent: "space-around",
         flexDirection: "column",
-        justifySelf:"flex-end",
-         marginLeft: "auto",
-        alignItems:"end",
-        
+        justifySelf: "flex-end",
+        marginLeft: "auto",
+        alignItems: "end",
+
         [theme.breakpoints.down('xs')]: {
-            display:"none"
+            display: "none"
         },
 
     },
-    
+
     game_details_btn:
     {
-        
-        width:'90px'
+
+        width: '90px'
 
     },
 
@@ -311,133 +300,87 @@ const useStyles = makeStyles((theme) => ({
     },
     game_data_container:
     {
-        width:"100%",
-        marginRight:"12px",
+        marginRight: "12px",
         display: "flex",
         flexDirection: "row",
         [theme.breakpoints.down('xs')]: {
-            flexWrap:"wrap",
-            
+            flexWrap: "wrap",
+
             width: "100%",
-            
+
         },
         [theme.breakpoints.up('xs')]: {
-           
+
             width: "100%",
-            
+
         },
-        
+
     },
     game_data_block:
     {
         marginRight: "36px",
-        
-            fontFamily:"'Roboto', sans-serif"
-       
+
+        fontFamily: "'Roboto', sans-serif"
+
     },
     card_actions:
     {
-        justifyContent:"space-between",
+        justifyContent: "space-between",
         [theme.breakpoints.up("md")]:
-        {  
-            justifyContent:"center"
+        {
+            justifyContent: "center"
         }
     }
 
 }))
 
 
-const ExpandMore = styled((props) => {
-    const { expand, ...other } = props;
-    return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-    transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-    marginLeft: 'auto',
-
-}));
 
 
-export default function UserSearchResultCard(props) {
+
+export default function UserSearcCardAdmin(props) {
     const { data } = props;
-    const { isForEvent } = props;
-    const { userRole } = props;
-    const { onChecked } = props;
+    const { onEditClick } = props;
    
-
-    const navigate = useNavigate();
-    const [isChecked, setIsChecked] = useState(false);
-    
-
-    function HandleDetailsBtnClick(id)
+    function HandleOpenEditDialog(id)
     {
-        navigate(`/profile/${id}`)
+        onEditClick(id);
     }
- 
-   
-   const handleChecked = (event) => 
-   {
-        setIsChecked(event.target.checked);
-        onChecked(data.id ,event.target.checked);
-   }
-    
+
     const styles = useStyles();
 
-    
+
 
     return (
-        <Card  className={styles.root} >
-
-
+        <Card className={styles.root} >
             <CardContent>
-
                 <div className={styles.game_item}>
-                <div className={styles.game_data_container}>
+                    <div className={styles.game_data_container}>
                     
                         <div className={styles.game_data}>
-                            <span className={styles.data_prefix}>НИКНЕЙМ</span>
-                            <span className={styles.data}>{data.nickname === "" ? "НЕТ ДАННЫХ" : data.nickname}</span>
+                            <span className={styles.data_prefix}>Название клуба</span>
+                            <span className={styles.data}>{data.clubName === "" ? "НЕТ ДАННЫХ" : data.clubName}</span>
                         </div>
                         <div className={styles.game_data}>
-                            <span className={styles.data_prefix}>РЕАЛЬНОЕ ИМЯ</span>
-                            <span className={styles.data}>{data.name === "" ? "НЕТ ДАННЫХ" : data.name}</span>
+                            <span className={styles.data_prefix}>Город</span>
+                            <span className={styles.data}>{data.city.name === "" ? "НЕТ ДАННЫХ" : data.city.name}</span>
                         </div>
-                   
-                    
-                    
-                    <div className={styles.game_result_container}>
-                        <Hidden xsDown>
-                       { isForEvent && userRole === "ROLE_ADMIN" && (<FormControlLabel sx={{ color: '#333333' }} control={<Checkbox checked={isChecked} onChange={handleChecked}
-                            sx={{
-                                color: '#b80000', '&.Mui-checked': {
-                                    color: '#b80000', // Задайте нужный цвет для активного состояния
-                                },
-                            }}
-
-                        > </Checkbox>} label={<span style={{ fontFamily: "'Roboto', sans-serif", fontSize: "12pt", fontWeight: "600" }}>ЯВИЛСЯ</span>} />
-                        )}
-                            <Button onClick={ ()=>HandleDetailsBtnClick(data.id)} className={styles.game_details_btn} variant="outlined">Профиль</Button></Hidden>
+                       
+                        <div className={styles.game_result_container}>
+                            <Hidden xsDown>
+                                <Button onClick={() => HandleOpenEditDialog(data.id)}  variant="outlined">Редактировать</Button>
+                            </Hidden>
+                        </div>
                     </div>
-                </div>
-                
+
                 </div>
                 <Hidden smUp>
-                <CardActions className={styles.card_actions} >
-                {isForEvent && userRole === "ROLE_ADMIN" && (<FormControlLabel sx={{ color: '#333333' }} control={<Checkbox checked={isChecked} onChange={onChecked}
-                            sx={{
-                                color: '#b80000', '&.Mui-checked': {
-                                    color: '#b80000', // Задайте нужный цвет для активного состояния
-                                },
-                            }}
-
-                        > </Checkbox>} label={<span style={{ fontFamily: "'Roboto', sans-serif", fontSize: "12pt", fontWeight: "600" }}>ЯВИЛСЯ</span>} />)}
-                    
-                <Button variant="outlined">
-                    Профиль
-                </Button>
-                </CardActions>
+                    <CardActions className={styles.card_actions} >
+                        <Button onClick={() => HandleOpenEditDialog(data.id)}  variant="outlined">Редактировать</Button>
+                    </CardActions>
                 </Hidden>
             </CardContent>
-            
+
         </Card>
     );
 }

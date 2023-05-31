@@ -174,7 +174,7 @@ function Header2() {
                             <ToolBarButton buttonId="rating" label="Рейтинг" activeButtonId={activeButtonId} onButtonClick={(buttonId) => { handleButtonClick(buttonId);  navigate("/rating")  }} />
                             <ToolBarButton buttonId="help" label="Помощь" activeButtonId={activeButtonId} onButtonClick={(buttonId) => { handleButtonClick(buttonId);  }} />
                             <ToolBarButton buttonId="schedule" label="Расписание" activeButtonId={activeButtonId} onButtonClick={(buttonId) => { handleButtonClick(buttonId); }} />
-                            <ToolBarButton buttonId="admin" label="Админ" activeButtonId={activeButtonId} onButtonClick={(buttonId) => { handleButtonClick(buttonId);  }} />
+                            <ToolBarButton buttonId="admin" label="Админ" activeButtonId={activeButtonId} onButtonClick={(buttonId) => { handleButtonClick(buttonId); navigate("/admin")  }} />
 
                         </div>
                     </Hidden>

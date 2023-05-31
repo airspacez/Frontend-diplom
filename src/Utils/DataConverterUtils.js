@@ -23,5 +23,37 @@ export function convertGameTypesForSelectComponent(gameTypes) {
     }));
   }
 
+  export function convertClubsForSelectComponent(clubs) {
+    return clubs.map(club => ({
+      value: club.id,
+      label: club.clubName   
+
+    }));
+  }
  
+
+  export function convertStatusesForSelectComponent(statuses) {
+    return statuses.map(status => ({
+      value: status.id,
+      label: status.description   
+
+    }));
+  }
+
+  export function convertRolesForSelectComponent(roles) {
+    return roles.map(role => ({
+      value: role.id,
+      label: role.name   
+
+    }));
+  }
+
+  export function convertCitiesForSelectComponent(cities) {
+    return cities.map(city => ({
+      value: city.id,
+      label: city.name   
+
+    }));
+  }
+
   

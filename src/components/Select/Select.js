@@ -8,11 +8,7 @@ import { makeStyles } from '@material-ui/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { useState } from 'react';
 const useStyles = makeStyles((theme) => ({
-    select_form_control:
-    {
-        display:"flex",
-        justifyContent:"start"
-    },
+    
     select:
     { 
 
@@ -98,12 +94,12 @@ export default function SelectLabels(props) {
    
     const styles = useStyles();
     return (
-      <div className={styles.select_form_control}>
       
-      <FormControl size='small' variant="outlined"   >
+      <FormControl size='medium' variant="outlined" fullWidth  >
       <InputLabel className={styles.label}  id="demo-simple-select-outlined-label">{label}</InputLabel>
         
-        <Select 
+        <Select  
+          
           className={styles.select}
           onOpen={onOpen}
           labelId="demo-simple-select-outlined-label"
@@ -128,6 +124,6 @@ export default function SelectLabels(props) {
       </FormControl>
       
         
-      </div>
+      
     );
   }

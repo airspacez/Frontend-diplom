@@ -1,30 +1,28 @@
-
+import {useState, useEffect} from 'react'
 import { styled } from '@material-ui/styles';
 import { useNavigate } from "react-router-dom";
-import { useState } from 'react';
 import Hidden from "@material-ui/core/Hidden"
 import Button from "@material-ui/core/Button"
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from '@material-ui/core/CardActions';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
+import Collapse from "@material-ui/core/Collapse";
 import IconButton from '@material-ui/core/IconButton';
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
+import { parseISO, format } from 'date-fns';
 
 import { makeStyles } from '@material-ui/core/styles';
-import { set } from 'date-fns';
+
+
 
 const useStyles = makeStyles((theme) => ({
     root:
     {   
-        width:"100%",
         marginBottom:"24px",
         background: "#EBE5D7",
         '&.MuiCard-root':
         {
-
             height:"fit-content",
-
         },
         [theme.breakpoints.down('sm')]: {
             marginBottom:"5px",
@@ -253,9 +251,7 @@ const useStyles = makeStyles((theme) => ({
     },
     game_item:
     {
-
         display: "flex",
-        width:"100%",
         justifyContent: "space-between",
         fontFamily: "'Roboto', sans-serif",
         textTransform: "uppercase",
@@ -268,14 +264,13 @@ const useStyles = makeStyles((theme) => ({
     },
     game_data:
     {
-        marginRight:"12px",
         fontSize: "14pt",
         fontWeight: "600",
         height: "fit-content",
         textAlign: "left",
         
             
-        
+        marginBottom:"12px"
         
         
     },
@@ -288,9 +283,12 @@ const useStyles = makeStyles((theme) => ({
         justifySelf:"flex-end",
          marginLeft: "auto",
         alignItems:"end",
-        
-        [theme.breakpoints.down('xs')]: {
-            display:"none"
+        marginRight:"24px",
+        [theme.breakpoints.down('sm')]: {
+            alignItems:"start",
+            width: "100%",
+            margin: "0 auto",
+            marginBottom:"24px"
         },
 
     },
@@ -311,17 +309,15 @@ const useStyles = makeStyles((theme) => ({
     },
     game_data_container:
     {
-        width:"100%",
-        marginRight:"12px",
         display: "flex",
         flexDirection: "row",
-        [theme.breakpoints.down('xs')]: {
+        [theme.breakpoints.down('sm')]: {
             flexWrap:"wrap",
             
             width: "100%",
             
         },
-        [theme.breakpoints.up('xs')]: {
+        [theme.breakpoints.up('sm')]: {
            
             width: "100%",
             
@@ -346,98 +342,79 @@ const useStyles = makeStyles((theme) => ({
 
 }))
 
-
-const ExpandMore = styled((props) => {
-    const { expand, ...other } = props;
-    return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-    transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-    marginLeft: 'auto',
-
-}));
-
-
-export default function UserSearchResultCard(props) {
+export default function EventCardAdmin(props) {
     const { data } = props;
-    const { isForEvent } = props;
-    const { userRole } = props;
-    const { onChecked } = props;
-   
+    const {onEditClick} = props;
 
     const navigate = useNavigate();
-    const [isChecked, setIsChecked] = useState(false);
-    
 
     function HandleDetailsBtnClick(id)
     {
-        navigate(`/profile/${id}`)
+        navigate(`/events/${id}`)
+    }
+
+    const HandleOpenEditDialog = () => 
+    {
+        onEditClick(data.id);
     }
  
-   
-   const handleChecked = (event) => 
-   {
-        setIsChecked(event.target.checked);
-        onChecked(data.id ,event.target.checked);
-   }
-    
     const styles = useStyles();
+    const [date, setDate] = useState();
+    const [time, setTime] = useState();
+    
 
+    useEffect(() => {
+        
+
+            const date = parseISO(data.datetime);
+            const timeZoneOffset = 10 * 60; // Смещение часового пояса в минутах (+10:00)
+            const timeZoneDate = new Date(date.getTime() + timeZoneOffset);
+
+            const dateString = format(timeZoneDate, 'dd.MM.yyyy');
+            const timeString = format(timeZoneDate, 'HH:mm');
+            setDate(dateString);
+            setTime(timeString);
+        
+  
+    }, [data.datetime]);
     
 
     return (
         <Card  className={styles.root} >
-
-
             <CardContent>
-
                 <div className={styles.game_item}>
                 <div className={styles.game_data_container}>
-                    
+                    <div className={styles.game_data_block}>
                         <div className={styles.game_data}>
-                            <span className={styles.data_prefix}>НИКНЕЙМ</span>
-                            <span className={styles.data}>{data.nickname === "" ? "НЕТ ДАННЫХ" : data.nickname}</span>
+                            <span className={styles.data_prefix}>название мероприятия</span>
+                            <span className={styles.data}>{data?.name}</span>
                         </div>
                         <div className={styles.game_data}>
-                            <span className={styles.data_prefix}>РЕАЛЬНОЕ ИМЯ</span>
-                            <span className={styles.data}>{data.name === "" ? "НЕТ ДАННЫХ" : data.name}</span>
+                            <span className={styles.data_prefix}>место проведения</span>
+                            <span className={styles.data}>{data?.place?.description + ", " + data?.place?.address + ", " + data?.place?.city?.name}</span>
+                        </div>
+                    </div>
+                   
+                        <div className={styles.game_data_block}>
+                            <div className={styles.game_data}>
+                                <span className={styles.data_prefix}>дата</span>
+                                <span className={styles.data}>{date}</span>
+                            </div>
+                            <div className={styles.game_data}>
+                                <span className={styles.data_prefix}>время </span>
+                                <span className={styles.data}>{time} (GMT+10)</span>
+                            </div>
                         </div>
                    
-                    
-                    
+                   
                     <div className={styles.game_result_container}>
-                        <Hidden xsDown>
-                       { isForEvent && userRole === "ROLE_ADMIN" && (<FormControlLabel sx={{ color: '#333333' }} control={<Checkbox checked={isChecked} onChange={handleChecked}
-                            sx={{
-                                color: '#b80000', '&.Mui-checked': {
-                                    color: '#b80000', // Задайте нужный цвет для активного состояния
-                                },
-                            }}
-
-                        > </Checkbox>} label={<span style={{ fontFamily: "'Roboto', sans-serif", fontSize: "12pt", fontWeight: "600" }}>ЯВИЛСЯ</span>} />
-                        )}
-                            <Button onClick={ ()=>HandleDetailsBtnClick(data.id)} className={styles.game_details_btn} variant="outlined">Профиль</Button></Hidden>
+                        <Button onClick={ ()=>HandleDetailsBtnClick(data.id)}  variant="outlined">Детали</Button>
+                        <Button onClick={HandleOpenEditDialog}  variant="outlined">Редактировать</Button>
                     </div>
                 </div>
                 
                 </div>
-                <Hidden smUp>
-                <CardActions className={styles.card_actions} >
-                {isForEvent && userRole === "ROLE_ADMIN" && (<FormControlLabel sx={{ color: '#333333' }} control={<Checkbox checked={isChecked} onChange={onChecked}
-                            sx={{
-                                color: '#b80000', '&.Mui-checked': {
-                                    color: '#b80000', // Задайте нужный цвет для активного состояния
-                                },
-                            }}
-
-                        > </Checkbox>} label={<span style={{ fontFamily: "'Roboto', sans-serif", fontSize: "12pt", fontWeight: "600" }}>ЯВИЛСЯ</span>} />)}
-                    
-                <Button variant="outlined">
-                    Профиль
-                </Button>
-                </CardActions>
-                </Hidden>
-            </CardContent>
-            
+                </CardContent>
         </Card>
     );
 }
