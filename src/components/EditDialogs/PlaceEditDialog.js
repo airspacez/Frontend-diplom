@@ -146,7 +146,6 @@ export default function PlaceEditDialog(props) {
             city:selectedCityId,
             isArchived:entityData.isArchived,
         }
-
         try {
             setSaveInProgress(true);
             var result = await DataAccessService.patchPlaceData(entityId, updates);

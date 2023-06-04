@@ -56,4 +56,10 @@ export function convertGameTypesForSelectComponent(gameTypes) {
     }));
   }
 
-  
+  export function convertUsersForSelectComponent(cities) {
+    return cities.map(city => ({
+      value: city.id,
+      label: city.nickname   
+
+    }));
+  }

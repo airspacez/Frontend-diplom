@@ -59,11 +59,12 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function SelectLabels(props) {
-  const { items, label, value, onChange, onOpen } = props;
+  const { items, label, value, onChange, onOpen, disabled } = props;
     
   const handleChange = (event) => {
     const value = event.target.value;
     onChange(value);
+
   };
 
    
@@ -99,18 +100,18 @@ export default function SelectLabels(props) {
       <InputLabel className={styles.label}  id="demo-simple-select-outlined-label">{label}</InputLabel>
         
         <Select  
-          
+          disabled={disabled}
           className={styles.select}
           onOpen={onOpen}
           labelId="demo-simple-select-outlined-label"
           id="demo-simple-select-helper"
-          value={value === undefined ? "" : value }
-          label={label}
+          value={(value === undefined)  ? "" : value }
+          label={label} 
           onChange={handleChange}
           MenuProps={menuProps}
           
         >
-          {items === undefined ? (
+          {(items === undefined) ? (
             <MenuItem disabled>
               Загрузка...
             </MenuItem>

@@ -79,6 +79,12 @@ const useStyles = makeStyles((theme) => ({
     white_text:
     {
         color:"#EBE5D7",
+    },
+    link:
+    {
+        textAlign:"right",
+        fontSize:"12pt",
+
     }
 
 }));
@@ -138,8 +144,8 @@ export default function AuthPage()
           onChange={handlePasswordChange}/>
                             
                             <div className={styles.form_buttons}></div>
-                            <Button className={styles.button_filled} type="submit" variant="contained">Вход</Button>
-                            <Button className={styles.button_outlined} variant="outlined">Вход через ВК</Button>
+                            <Button className={styles.button_filled} type="submit" variant="contained">Сохранить пароль</Button>
+                            <a href="#" className={styles.link + " " + styles.white_text} >Забыли пароль?</a>
                            { errorCode == 401 ? <div className={styles.white_text}>Неправильный логин или пароль</div> : "" }
                         </FormControl>
                         </form>

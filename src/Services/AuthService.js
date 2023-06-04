@@ -1,7 +1,7 @@
 export const USER_NAME_SESSION_ATTRIBUTE_NAME = 'authenticatedUserId';
  class AuthenticationService {
 
-
+ 
     static async login(Username, Password) {
        let formData = new FormData()
        formData.append("username",Username)
@@ -11,7 +11,6 @@ export const USER_NAME_SESSION_ATTRIBUTE_NAME = 'authenticatedUserId';
            credentials: 'include',
            headers: {
            },
-           
            body: formData
        },
        {

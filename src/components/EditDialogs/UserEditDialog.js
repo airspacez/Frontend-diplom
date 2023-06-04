@@ -176,7 +176,6 @@ export default function PlaceEditDialog(props) {
 
     const handleSave = async (event) => {
         event.preventDefault();
-
         var updates = {
             name: entityData.name,
             nickname: entityData.nickname,
@@ -190,12 +189,9 @@ export default function PlaceEditDialog(props) {
             birthdayDate:entityData.birthdayDate,
             username:entityData.username
         }
-
         try {
             setSaveInProgress(true);
             var result = await DataAccessService.patchUserData(entityId, updates);
-            console.log(result);
-
             if (result) {
                 handleClose();
             }
@@ -251,7 +247,8 @@ export default function PlaceEditDialog(props) {
             
                 {!loading ? (
                       <form id="form" onSubmit={handleSave}  >
-                    <List>
+                    <List sx={{ display:isSmallScreen ? "" : "flex", flexDirection:"row"}}>
+                        <div>
                         <ListItem>
                             <TextField fullWidth required
                                 label="Имя пользователя"
@@ -388,6 +385,8 @@ export default function PlaceEditDialog(props) {
                                 onChange={handleSexChange}
                             />
                         </ListItem>
+                        </div>
+                        <div>
                         <ListItem>
                             <TextField fullWidth required
                                 form="form"
@@ -565,7 +564,7 @@ export default function PlaceEditDialog(props) {
                                     }}
                                 />
                             </LocalizationProvider>
-                        </ListItem>
+                        </ListItem></div>
                     </List></form>) : (<Box sx={{ height: "100%", justifyContent: "center", alignItems: "center", display: 'flex' }}>
                         <CircularProgress sx={{color:"#EBE5D7"}} />    
                     </Box>)}

@@ -334,7 +334,6 @@ class DataAccessService
         {
             search += `&searchString=${searchString}`;
         }
-       
         console.log(search);
         var response = await fetch(`http://localhost:8080/users?page=${page}&count=${count}` + search, {
             credentials: 'include',
@@ -342,11 +341,9 @@ class DataAccessService
                 'Content-Type': 'application/json',
             },
         });
-        
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
-        
         var data = await response.json();
         console.log(data);
         return data;
@@ -354,25 +351,20 @@ class DataAccessService
 
     async getUserRatingsBySearchString(searchString, page, count) {
         var search = "";
-        if (searchString.length > 0)
-        {
+        if (searchString.length > 0){
             search += `&searchString=${searchString}`;
         }
-       
-        console.log(search);
         var response = await fetch(`http://localhost:8080/ratings?page=${page}&count=${count}` + search, {
             credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
             },
         });
-        
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         
         var data = await response.json();
-        console.log(data);
         return data;
     }
 
@@ -747,6 +739,42 @@ class DataAccessService
         var data = await response.json();
         return data;
     }
+
+    async getLeads() {
+        var response = await fetch(`http://localhost:8080/users/leads`, {
+            credentials: 'include',
+        
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+            
+        var data = await response.json();
+        return data;
+    }
+
+    async patchUsersInEventByEventIdAndTableNo(eventId, tableNo, updates) {
+        var response = await fetch(`http://localhost:8080/usersInEvents/${eventId}/tableNo/${tableNo}`, {
+            method:"PATCH",
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(updates),
+        });
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        return true;
+    }
 }
+
+
 
 export default new DataAccessService();

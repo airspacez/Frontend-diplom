@@ -132,7 +132,6 @@ export default function ClubEditDialog(props) {
             clubName:entityData.clubName,
             city:selectedCityId,
         }
-
         try {
             setSaveInProgress(true);
             var result = await DataAccessService.patchClubData(entityId, updates);
@@ -140,16 +139,12 @@ export default function ClubEditDialog(props) {
 
             if (result) {               
                 var editedCityName = cities[cities.findIndex(item => item.id === selectedCityId)].name;
-                console.log(selectedCityId); 
-                console.log(cities);
-                console.log(editedCityName);
                 onDataEdited(entityId,{...updates,cityName: editedCityName});
                 handleClose();
             }
         } catch (error) {
             console.error('Произошла ошибка при обновлении данных', error);
         } finally {
-            // Установка состояния isLoading в false после получения ответа от сервера
             setSaveInProgress(false);
         }
     }
